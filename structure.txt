@@ -1,0 +1,15 @@
+to_do_list_test/
+├── docker-compose.yml
+├── README.md
+├── backend/
+│   ├── package.json
+│   ├── tsconfig.json
+│   ├── Dockerfile
+│   └── src/
+│       └── index.ts   // Código de prueba: imprime "Hola Mundo" o levanta un endpoint básico
+└── frontend/
+    ├── package.json
+    ├── tsconfig.json
+    ├── Dockerfile
+    └── src/
+        └── index.tsx  // Código de prueba: muestra "Hola Mundo" en la interfaz
