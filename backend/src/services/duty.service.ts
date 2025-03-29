@@ -1,31 +1,40 @@
 import pool from '../config/database';
 import { v4 as uuidv4 } from 'uuid';
-
-export interface Duty {
-  id: string;
-  name: string;
-}
+import { Duty } from '../models/duty';
+import * as dutyRepository from '../repositories/duty.repository';
 
 export const createDuty = async (name: string): Promise<Duty> => {
-  const id = uuidv4();
-  const query = 'INSERT INTO duties (id, name) VALUES ($1, $2) RETURNING *';
-  const values = [id, name];
-  const result = await pool.query(query, values);
-  return result.rows[0];
+  const duty: Duty = {
+    id: uuidv4(),
+    name,
+  };
+  return await dutyRepository.insertDuty(duty);
 };
 
 export const getDuties = async (): Promise<Duty[]> => {
-  const query = 'SELECT * FROM duties';
-  const result = await pool.query(query);
-  return result.rows;
+  return await dutyRepository.getAllDuties();
 };
 
-export const updateDuty = async (id: string, name: string): Promise<Duty> => {
-  const query = 'UPDATE duties SET name = $1 WHERE id = $2 RETURNING *';
-  const values = [name, id];
-  const result = await pool.query(query, values);
-  if (result.rowCount === 0) {
+export const updateDuty = async (duty: Duty): Promise<Duty> => {
+  if (!await dutyRepository.getDutyById(duty.id)) {
     throw new Error('Duty not found');
   }
-  return result.rows[0];
+
+  const updatedDuty = await dutyRepository.updateDutyById(duty.id, duty.name);
+  if (!updatedDuty) {
+    throw new Error('Failed to update duty');
+  }
+  return updatedDuty;
+};
+
+export const deleteDuty = async (id: string): Promise<Duty> => {
+  if (!await dutyRepository.getDutyById(id)) {
+    throw new Error('Duty not found');
+  }
+
+  const deletedDuty = await dutyRepository.deleteDutyById(id);
+  if (!deletedDuty) {
+    throw new Error('Failed to delete duty');
+  }
+  return deletedDuty;
 };

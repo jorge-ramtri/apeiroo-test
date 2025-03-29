@@ -1,7 +1,6 @@
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 
-// Load .env file
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 /*
 In order to add a new configuration, follow this setps:
@@ -14,18 +13,28 @@ In order to add a new configuration, follow this setps:
 */
 
 // Vaiidate env variables
-const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } = process.env;
-if (!DB_HOST || !DB_PORT || !DB_USER || !DB_PASSWORD || !DB_NAME) {
-  throw new Error('Faltan variables de entorno requeridas en el archivo .env');
+const { BACK_PORT, FRONT_PORT, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } = process.env;
+if (!BACK_PORT || !FRONT_PORT || !DB_HOST || !DB_PORT || !DB_USER || !DB_PASSWORD || !DB_NAME) {
+  throw new Error('Missing some enviroment variable');
 }
 
-//Validate port
-const port = parseInt(DB_PORT, 10);
-if (isNaN(port)) {
-  throw new Error('La variable DB_PORT debe ser un número válido');
-}
+//Validate ports
+[ BACK_PORT, FRONT_PORT, DB_PORT].forEach((element) => { 
+  const port = parseInt(element, 10)
+  if (isNaN(port)) {
+    throw new Error('Ports must be a valid number.');
+  }
+});
 
 // Types ---------------------------------
+interface BackendConfig {
+  port: number;
+}
+
+interface FrontendConfig {
+  port: number;
+}
+
 // Config for PostgreSQL Pool type object.
 interface DatabaseConfig {
   host: string;
@@ -37,15 +46,22 @@ interface DatabaseConfig {
 
 // Config object definition ---------------
 interface Config {
-  database: DatabaseConfig
-  // En el futuro podemos añadir aquí más secciones de config
+  backend: BackendConfig;
+  frontend: FrontendConfig;
+  database: DatabaseConfig;
 }
 
-// config object setting
+// config object setting ------------------
 const config: Config = {
+  backend: {
+    port: parseInt(BACK_PORT, 10)
+  },
+  frontend: {
+    port: parseInt(FRONT_PORT, 10)
+  },
   database: {
     host: DB_HOST,
-    port: port,
+    port: parseInt(DB_PORT, 10),
     user: DB_USER,
     password: DB_PASSWORD,
     name: DB_NAME,
