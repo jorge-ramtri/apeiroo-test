@@ -38,8 +38,10 @@ describe('Integration Tests: Duty Service with PostgreSQL', () => {
   test('should update an existing duty', async () => {
     const initialName = 'Initial Duty';
     const duty = await createDuty(initialName);
-    const updatedDuty = await updateDuty(duty.id, 'Updated Duty');
-    expect(updatedDuty.name).toBe('Updated Duty');
+    const id = duty.id;
+    const name = "Updated Duty";
+    const updatedDuty = await updateDuty({id, name});
+    expect(updatedDuty.name).toBe("Updated Duty");
   });
 
   test('should return empty array when no duties exist', async () => {
