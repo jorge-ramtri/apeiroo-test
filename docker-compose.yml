@@ -11,7 +11,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 
@@ -23,7 +23,7 @@ services:
     env_file:
       - .env
     ports:
-      - "4000:4000"
+      - "${BACK_PORT}:4000"
     volumes:
       - ./backend:/usr/src/app
       - /usr/src/app/node_modules
@@ -32,13 +32,13 @@ services:
   frontend:
     build:
       context: ./frontend
+    env_file:
+      - .env
     ports:
-      - "3000:3000"
+      - "${FRONT_PORT}:3000"
     volumes:
       - ./frontend:/usr/src/app
       - /usr/src/app/node_modules
-    env_file:
-      - .env
     command: npm start
 
 volumes:
