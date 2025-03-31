@@ -7,7 +7,7 @@ import { errorHandler } from './middlewares/errorHandler';
 const app = express();
 
 app.use(bodyParser.json());
-app.use('/api', router);
+app.use('/duties', router);
 app.use(errorHandler);
 
 export default app;
