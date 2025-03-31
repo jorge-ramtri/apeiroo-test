@@ -54,10 +54,13 @@ To run backend tests (unit + integration):
     └── README.md              # You are here :)
 ## ✅ Features (So Far)
 * ✅ Create a new duty
-
-* ❌ List all duties
-
-* ❌ Update existing duties
-
+* ✅ List all duties
+* ✅ Update existing duties
+* ❌ Add duty button
+* ❌ Show list of duties
+* ❌ Can select and edit duty
 * ❌ Optional: Delete a duty (coming soon)
+
+## 📸 Frontend Screenshots
+(Coming soon during frontend development phase)
 
