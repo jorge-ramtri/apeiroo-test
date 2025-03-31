@@ -19,9 +19,9 @@ export const getDutyById = async (id: string): Promise<Duty | null> => {
   return result.rows[0] || null;
 };
 
-export const updateDutyById = async (id: string, name: string): Promise<Duty | null> => {
+export const updateDutyById = async (duty: Duty): Promise<Duty | null> => {
   const query = 'UPDATE duties SET name = $1 WHERE id = $2 RETURNING *';
-  const result = await pool.query(query, [name, id]);
+  const result = await pool.query(query, [duty.name, duty.id]);
   return result.rows[0] || null;
 };
 
