@@ -9,41 +9,17 @@ export const createDuty = async (name: string): Promise<Duty> => {
     id: uuidv4(),
     name,
   };
-  try {
-    return await dutyRepository.insertDuty(duty);
-  } catch (error) {
-    throw new DatabaseError('Failed to create duty');
-  }
+  return await dutyRepository.insertDuty(duty);
 };
 
 export const getDuties = async (): Promise<Duty[]> => {
-  try {
-    return await dutyRepository.getAllDuties();
-  } catch (error) {
-    throw new DatabaseError('Failed to retrieve duties');
-  }
+  return await dutyRepository.getAllDuties();
 };
 
-export const updateDuty = async (duty: Duty): Promise<Duty> => {
-  if (!await dutyRepository.getDutyById(duty.id)) {
-    throw new NotFoundError('Duty not found');
-  }
-
-  const updatedDuty = await dutyRepository.updateDutyById(duty);
-  if (!updatedDuty) {
-    throw new DatabaseError('Failed to update duty');
-  }
-  return updatedDuty;
+export const updateDuty = async (duty: Duty): Promise<boolean> => {
+  return await dutyRepository.updateDutyById(duty);
 };
 
-export const deleteDuty = async (id: string): Promise<Duty> => {
-  if (!await dutyRepository.getDutyById(id)) {
-    throw new NotFoundError('Duty not found');
-  }
-
-  const deletedDuty = await dutyRepository.deleteDutyById(id);
-  if (!deletedDuty) {
-    throw new DatabaseError('Failed to delete duty');
-  }
-  return deletedDuty;
+export const deleteDuty = async (id: string): Promise<boolean> => {
+  return await dutyRepository.deleteDutyById(id);
 };

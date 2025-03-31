@@ -38,9 +38,12 @@ describe('Integration Tests: Duty Service with PostgreSQL', () => {
   test('should update an existing duty', async () => {
     const initialName = 'Initial Duty';
     const duty = await createDuty(initialName);
-    const id = duty.id;
     const name = "Updated Duty";
-    const updatedDuty = await updateDuty({id, name});
+    const newDuty = {id: duty.id, name: name}
+    await updateDuty(newDuty);
+    const duties = await getDuties();
+    expect(duties).toHaveLength(1);
+    const updatedDuty = duties[0];
     expect(updatedDuty.name).toBe("Updated Duty");
   });
 
