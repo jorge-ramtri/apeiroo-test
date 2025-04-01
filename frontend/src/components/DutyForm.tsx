@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, Space } from 'antd';
 import { useEffect } from 'react';
-import { Duty } from '../types/Duty';
+import { Duty } from '../types/duty';
 
 interface DutyFormProps {
   duty?: Duty; // si existe, es edición; si no, es creación

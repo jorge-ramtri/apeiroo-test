@@ -1,7 +1,7 @@
 import React from 'react';
 import { List, Button } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Duty } from '../types/Duty';
+import { Duty } from '../types/duty';
 
 interface DutyListProps {
   duties: Duty[];
