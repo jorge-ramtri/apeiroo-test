@@ -1,8 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Duty } from '../models/duty';
 import * as dutyRepository from '../repositories/duty.repository';
-import { DatabaseError } from '../errors/DatabaseError';
-import { NotFoundError } from '../errors/NotFoundError';
 
 export const createDuty = async (name: string): Promise<Duty> => {
   const duty: Duty = {

@@ -1,11 +1,41 @@
-import express from 'express';
-import router from './routes/hello';
+import app from './app';
+import config from './config';
+import logger from './config/simpleLogger';
 
-const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = config.backend.port;
 
-app.use('/', router);
+const server = app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
 
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:4000`);
+// Uncaught exceptions
+process.on('uncaughtException', (error) => {
+  logger.error('Uncaught Exception', error);
+  process.exit(1);
+});
+
+// Unhandled rejections
+process.on('unhandledRejection', (reason, promise) => {
+  logger.error('Unhandled Rejection at:', reason instanceof Error ? reason : new Error(String(reason)));
+  process.exit(1);
+});
+
+
+// Close logs
+process.on('SIGTERM', () => {
+  logger.info('SIGTERM signal received: closing server');
+  server.close(() => {
+    logger.info('Server closed');
+    logger.close();
+    process.exit(0);
+  });
+});
+
+process.on('SIGINT', () => {
+  logger.info('SIGINT signal received: closing server');
+  server.close(() => {
+    logger.info('Server closed');
+    logger.close();
+    process.exit(0);
+  });
 });

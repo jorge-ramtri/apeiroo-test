@@ -14,8 +14,10 @@ export const insertDuty = async (duty: Duty): Promise<Duty> => {
 };
 
 export const getAllDuties = async (): Promise<Duty[]> => {
+  console.log(`SELECT * FROM duties`);
   const query = 'SELECT * FROM duties';
   const result = await pool.query(query);
+  console.log(result.rows);
   return result.rows;
 };
 

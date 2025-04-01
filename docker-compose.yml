@@ -26,7 +26,6 @@ services:
       - "${BACK_PORT}:4000"
     volumes:
       - ./backend:/usr/src/app
-      - /usr/src/app/node_modules
     command: npm run dev
 
   frontend:
