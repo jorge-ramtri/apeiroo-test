@@ -4,7 +4,6 @@ import pool, { closeDb } from '../../src/config/database';
 describe('Integration Tests: Duty Service with PostgreSQL', () => {
   beforeAll(async () => {
 
-    // Opcional: Asegurarse de que la tabla esté creada (si no se usa el script de inicialización de Docker)
     await pool.query(`
       CREATE TABLE IF NOT EXISTS duties (
         id UUID PRIMARY KEY,
@@ -14,17 +13,16 @@ describe('Integration Tests: Duty Service with PostgreSQL', () => {
   });
 
   beforeEach(async () => {
-    // Limpiar la tabla antes de cada test para asegurar independencia
+    // TODO - Delete this, use test db
     await pool.query('DELETE FROM duties;');
   });
 
   afterAll(async () => {
-    // Cerrar la conexión a la base de datos
     await closeDb();
   });
 
   test('should create a new duty and retrieve it', async () => {
-    const dutyName = 'Integration Test Duty';
+    const dutyName = 'Integration Test Duty';S
     const duty = await createDuty(dutyName);
     expect(duty).toHaveProperty('id');
     expect(duty.name).toBe(dutyName);
@@ -39,7 +37,7 @@ describe('Integration Tests: Duty Service with PostgreSQL', () => {
     const initialName = 'Initial Duty';
     const duty = await createDuty(initialName);
     const name = "Updated Duty";
-    const newDuty = {id: duty.id, name: name}
+    const newDuty = { id: duty.id, name: name }
     await updateDuty(newDuty);
     const duties = await getDuties();
     expect(duties).toHaveLength(1);

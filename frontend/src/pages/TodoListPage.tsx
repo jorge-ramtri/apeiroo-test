@@ -13,7 +13,7 @@ const TodoListPage = () => {
   const [duties, setDuties] = useState<Duty[]>([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { id: selectedId } = useParams();
   const screens = Grid.useBreakpoint();
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const TodoListPage = () => {
       const data = await fetchDuties();
       setDuties(data);
     } catch (err) {
-      message.error('Error loading duties');
+      message.error('Error loading tasks');
     } finally {
       setLoading(false);
     }
@@ -39,26 +39,26 @@ const TodoListPage = () => {
   const handleDelete = async (dutyId: string) => {
     try {
       await deleteDuty(dutyId);
-      message.success('Duty deleted');
+      message.success('Task deleted');
       loadDuties();
     } catch (err) {
-      message.error('Failed to delete duty');
+      message.error('Failed to delete task');
     }
   };
 
   const handleSave = async (name: string) => {
     try {
-      if (id) {
-        await updateDuty(id, name);
-        message.success('Duty updated');
+      if (selectedId) {
+        await updateDuty(selectedId, name);
+        message.success('Updated!');
       } else {
         await createDuty(name);
-        message.success('Duty created');
+        message.success('Created!');
       }
       navigate('/');
       loadDuties();
     } catch (err) {
-      message.error('Failed to save duty');
+      message.error('Failed to save task');
     }
   };
 
@@ -66,8 +66,8 @@ const TodoListPage = () => {
     navigate('/');
   };
 
-  const isWide = screens.lg ?? false; // TODO this can be more tunned in.
-  const dutyToEdit = duties.find((d) => d.id === id);
+  const isWide = screens.lg ?? false; 
+  const dutyToEdit = duties.find((d) => d.id === selectedId);
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -93,8 +93,8 @@ const TodoListPage = () => {
           )}
         </Row>
 
-        {!isWide && id && (
-          <Modal open={!!id} footer={null} onCancel={handleCancel} destroyOnClose>
+        {!isWide && selectedId && (
+          <Modal open={!!selectedId} footer={null} onCancel={handleCancel} destroyOnClose>
             <DutyForm
               duty={dutyToEdit}
               onSave={handleSave}

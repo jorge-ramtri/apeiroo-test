@@ -20,22 +20,3 @@ process.on('unhandledRejection', (reason, promise) => {
   process.exit(1);
 });
 
-
-// Close logs
-process.on('SIGTERM', () => {
-  logger.info('SIGTERM signal received: closing server');
-  server.close(() => {
-    logger.info('Server closed');
-    logger.close();
-    process.exit(0);
-  });
-});
-
-process.on('SIGINT', () => {
-  logger.info('SIGINT signal received: closing server');
-  server.close(() => {
-    logger.info('Server closed');
-    logger.close();
-    process.exit(0);
-  });
-});

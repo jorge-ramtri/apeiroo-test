@@ -6,13 +6,13 @@ import { Duty } from '../types/duty';
 interface DutyListProps {
   duties: Duty[];
   onEdit: (dutyId: string) => void;
-  onDelete?: (dutyId: string) => void; // opcional, por si no queremos permitir borrado aún
+  onDelete?: (dutyId: string) => void;
 }
 
 const DutyList: React.FC<DutyListProps> = ({ duties, onEdit, onDelete }) => {
   return (
     <List
-      bordered
+      // bordered
       dataSource={duties}
       renderItem={(duty) => (
         <List.Item

@@ -55,9 +55,9 @@ To run backend tests (unit + integration):
 ## ✅ Features (So Far)
 * ✅ Create a new duty
 
-* ❌ List all duties
+* ✅ List all duties
 
-* ❌ Update existing duties
+* ✅ Update existing duties
 
-* ❌ Optional: Delete a duty (coming soon)
+* ✅ Optional: Delete a duty (coming soon)
 

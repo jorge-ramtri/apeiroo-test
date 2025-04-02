@@ -1,7 +1,6 @@
 import * as dutyRepository from '../src/repositories/duty.repository';
 import * as dutyService from '../src/services/duty.service';
 import { DatabaseError } from '../src/errors/DatabaseError';
-import { NotFoundError } from '../src/errors/NotFoundError';
 import { Duty } from '../src/models/duty';
 
 jest.mock('../src/repositories/duty.repository');

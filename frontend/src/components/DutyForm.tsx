@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { Duty } from '../types/duty';
 
 interface DutyFormProps {
-  duty?: Duty; // si existe, es edición; si no, es creación
+  duty?: Duty;
   onSave: (name: string) => void;
   onCancel?: () => void;
 }
@@ -33,10 +33,10 @@ const DutyForm: React.FC<DutyFormProps> = ({ duty, onSave, onCancel }) => {
       initialValues={{ name: duty?.name || '' }}
     >
       <Form.Item
-        label="Duty Name"
+        label="Task Name"
         name="name"
         rules={[
-          { required: true, message: 'Please enter the duty name' },
+          { required: true, message: 'Please enter the task name' },
           { min: 2, message: 'Name must be at least 2 characters' },
         ]}
       >
