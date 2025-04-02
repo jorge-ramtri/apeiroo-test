@@ -8,6 +8,7 @@ import DutyList from '../components/DutyList';
 import DutyForm from '../components/DutyForm';
 import { Duty } from '../types/duty';
 import { createDuty, deleteDuty, fetchDuties, updateDuty } from '../services/dutyService';
+import AddButton from '../components/AddButton';
 
 const TodoListPage = () => {
   const [duties, setDuties] = useState<Duty[]>([]);
@@ -103,6 +104,7 @@ const TodoListPage = () => {
           </Modal>
         )}
       </Layout.Content>
+      <AddButton onClick={() => navigate('/edit/new')} />
     </Layout>
   );
 };
