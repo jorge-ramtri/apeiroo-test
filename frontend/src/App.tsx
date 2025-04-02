@@ -1,11 +1,16 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import TodoListPage from './pages/TodoListPage';
 
-const App: React.FC = () => {
+function App() {
   return (
-    <div>
-      <h1>¡Hola Mundo!</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<TodoListPage />} />
+        <Route path="/edit/:id" element={<TodoListPage />} />
+      </Routes>
+    </BrowserRouter>
   );
-};
+}
 
 export default App;
