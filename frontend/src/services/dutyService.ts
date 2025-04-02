@@ -1,7 +1,7 @@
 import config from '../config';
 import { Duty } from '../types/duty';
 
-const DUTIES_URL = config.API_URL + "/duties";
+const DUTIES_URL = config.API_URL + '/duties';
 
 export const fetchDuties = async (): Promise<Duty[]> => {
   const res = await fetch(DUTIES_URL);

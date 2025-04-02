@@ -19,8 +19,8 @@ if (!BACK_PORT || !FRONT_PORT || !DB_HOST || !DB_PORT || !DB_USER || !DB_PASSWOR
 }
 
 //Validate ports
-[ BACK_PORT, FRONT_PORT, DB_PORT].forEach((element) => { 
-  const port = parseInt(element, 10)
+[BACK_PORT, FRONT_PORT, DB_PORT].forEach((element) => {
+  const port = parseInt(element, 10);
   if (isNaN(port)) {
     throw new Error('Ports must be a valid number.');
   }
@@ -54,10 +54,10 @@ interface Config {
 // config object setting ------------------
 const config: Config = {
   backend: {
-    port: parseInt(BACK_PORT, 10)
+    port: parseInt(BACK_PORT, 10),
   },
   frontend: {
-    port: parseInt(FRONT_PORT, 10)
+    port: parseInt(FRONT_PORT, 10),
   },
   database: {
     host: DB_HOST,

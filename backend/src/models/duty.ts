@@ -1,5 +1,4 @@
 export interface Duty {
-    id: string;
-    name: string;
-  }
-  
+  id: string;
+  name: string;
+}

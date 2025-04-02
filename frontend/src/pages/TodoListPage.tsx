@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Row, Col, Modal, message, Grid, Layout } from 'antd';
 
 import AppHeader from '../components/AppHeader';
@@ -15,6 +15,8 @@ const TodoListPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { id: selectedId } = useParams();
+  const location = useLocation();
+  const isCreating = location.pathname === '/create';
   const screens = Grid.useBreakpoint();
 
   useEffect(() => {
@@ -49,12 +51,12 @@ const TodoListPage = () => {
 
   const handleSave = async (name: string) => {
     try {
-      if (selectedId) {
-        await updateDuty(selectedId, name);
-        message.success('Updated!');
-      } else {
+      if (isCreating) {
         await createDuty(name);
         message.success('Created!');
+      } else if (selectedId) {
+        await updateDuty(selectedId, name);
+        message.success('Updated!');
       }
       navigate('/');
       loadDuties();
@@ -67,7 +69,7 @@ const TodoListPage = () => {
     navigate('/');
   };
 
-  const isWide = screens.lg ?? false; 
+  const isWide = screens.lg ?? false;
   const dutyToEdit = duties.find((d) => d.id === selectedId);
 
   return (
@@ -76,35 +78,28 @@ const TodoListPage = () => {
       <Layout.Content style={{ padding: 24 }}>
         <Row gutter={16}>
           <Col xs={24} lg={12}>
-            <DutyList
-              duties={duties}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
+            <DutyList duties={duties} onEdit={handleEdit} onDelete={handleDelete} />
           </Col>
 
           {isWide && (
             <Col lg={12}>
-              <DutyForm
-                duty={dutyToEdit}
-                onSave={handleSave}
-                onCancel={handleCancel}
-              />
+              <DutyForm duty={dutyToEdit} onSave={handleSave} onCancel={handleCancel} />
             </Col>
           )}
         </Row>
 
-        {!isWide && selectedId && (
-          <Modal open={!!selectedId} footer={null} onCancel={handleCancel} destroyOnClose>
-            <DutyForm
-              duty={dutyToEdit}
-              onSave={handleSave}
-              onCancel={handleCancel}
-            />
+        {!isWide && (selectedId || isCreating) && (
+          <Modal
+            open={!!selectedId || isCreating}
+            footer={null}
+            onCancel={handleCancel}
+            destroyOnClose
+          >
+            <DutyForm duty={dutyToEdit} onSave={handleSave} onCancel={handleCancel} />
           </Modal>
         )}
       </Layout.Content>
-      <AddButton onClick={() => navigate('/edit/new')} />
+      <AddButton onClick={() => navigate('/create')} />
     </Layout>
   );
 };

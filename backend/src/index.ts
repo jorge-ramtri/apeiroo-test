@@ -16,7 +16,9 @@ process.on('uncaughtException', (error) => {
 
 // Unhandled rejections
 process.on('unhandledRejection', (reason, promise) => {
-  logger.error('Unhandled Rejection at:', reason instanceof Error ? reason : new Error(String(reason)));
+  logger.error(
+    'Unhandled Rejection at:',
+    reason instanceof Error ? reason : new Error(String(reason))
+  );
   process.exit(1);
 });
-

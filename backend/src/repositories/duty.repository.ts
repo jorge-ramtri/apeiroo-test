@@ -10,7 +10,7 @@ export const insertDuty = async (duty: Duty): Promise<Duty> => {
     const result = await pool.query(query, [duty.id, duty.name]);
     return result.rows[0];
   } catch (error: any) {
-    logger.error(error.message)
+    logger.error(error.message);
     throw new DatabaseError('Failed to create task');
   }
 };
@@ -22,7 +22,7 @@ export const getAllDuties = async (): Promise<Duty[]> => {
     const result = await pool.query(query);
     return result.rows || [];
   } catch (error: any) {
-    logger.error(error.stack)
+    logger.error(error.stack);
     throw new DatabaseError('Failed to retrieve tasks');
   }
 };
@@ -44,7 +44,7 @@ export const updateDutyById = async (duty: Duty): Promise<boolean> => {
   const query = 'UPDATE duties SET name = $1 WHERE id = $2';
   const result = await pool.query(query, [duty.name, duty.id]);
   if (result.rowCount === 0) {
-    throw new NotFoundError('Task not found')
+    throw new NotFoundError('Task not found');
   }
   return true;
 };
@@ -54,7 +54,7 @@ export const deleteDutyById = async (id: string): Promise<boolean> => {
   const query = 'DELETE FROM duties WHERE id = $1';
   const result = await pool.query(query, [id]);
   if (result.rowCount === 0) {
-    throw new NotFoundError('Task not found')
+    throw new NotFoundError('Task not found');
   }
   return true;
 };

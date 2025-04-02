@@ -24,7 +24,7 @@ const AddButton: React.FC<AddButtonProps> = ({ onClick }) => {
         bottom: 24,
         right: 24,
         zIndex: 1000,
-        boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
       }}
     />
   );

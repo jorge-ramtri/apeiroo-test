@@ -1,4 +1,4 @@
-const { REACT_APP_BACKEND_URL }= process.env;
+const { REACT_APP_BACKEND_URL } = process.env;
 /*
 In order to add a new configuration, follow this setps:
 
@@ -23,7 +23,7 @@ interface Config {
 
 // config object setting ------------------
 const config: Config = {
-  API_URL: REACT_APP_BACKEND_URL
-}
+  API_URL: REACT_APP_BACKEND_URL,
+};
 
 export default config;
