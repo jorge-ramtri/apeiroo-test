@@ -27,13 +27,16 @@ const TodoListPage = () => {
     setLoading(true);
     try {
       const data = await fetchDuties();
-      setDuties(data);
+      setDuties(data.map((d) => ({ ...d, completed: d.completed ?? false })));
     } catch (err) {
       message.error('Error loading tasks');
     } finally {
       setLoading(false);
     }
   };
+
+  const isWide = screens.lg ?? false;
+  const dutyToEdit = duties.find((d) => d.id === selectedId);
 
   const handleEdit = (dutyId: string) => {
     navigate(`/edit/${dutyId}`);
@@ -54,8 +57,8 @@ const TodoListPage = () => {
       if (isCreating) {
         await createDuty(name);
         message.success('Created!');
-      } else if (selectedId) {
-        await updateDuty(selectedId, name);
+      } else if (selectedId && dutyToEdit) {
+        await updateDuty(dutyToEdit);
         message.success('Updated!');
       }
       navigate('/');
@@ -65,12 +68,16 @@ const TodoListPage = () => {
     }
   };
 
+  const handleToggleComplete = async (duty: Duty) => {
+    const updated = { ...duty, completed: !duty.completed };
+    await updateDuty(updated);
+    const updatedList = duties.map((d) => (d.id === duty.id ? updated : d));
+    setDuties(updatedList);
+  };
+
   const handleCancel = () => {
     navigate('/');
   };
-
-  const isWide = screens.lg ?? false;
-  const dutyToEdit = duties.find((d) => d.id === selectedId);
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -78,7 +85,12 @@ const TodoListPage = () => {
       <Layout.Content style={{ padding: 24 }}>
         <Row gutter={16}>
           <Col xs={24} lg={12}>
-            <DutyList duties={duties} onEdit={handleEdit} onDelete={handleDelete} />
+            <DutyList
+              duties={duties}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onToggleComplete={handleToggleComplete}
+            />
           </Col>
 
           {isWide && (

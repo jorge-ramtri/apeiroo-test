@@ -24,7 +24,8 @@ export const updateDuty = async (req: Request, res: Response): Promise<void> => 
   try {
     const { id } = req.params;
     const { name } = req.body;
-    const updatedDuty = await dutyService.updateDuty({ id, name });
+    const { completed } = req.body;
+    const updatedDuty = await dutyService.updateDuty({ id, name, completed });
     res.status(200).json(updatedDuty);
   } catch (error: any) {
     res.status(404).json({ message: error.message });

@@ -6,6 +6,7 @@ export const createDuty = async (name: string): Promise<Duty> => {
   const duty: Duty = {
     id: uuidv4(),
     name,
+    completed: false
   };
   return await dutyRepository.insertDuty(duty);
 };
@@ -15,7 +16,7 @@ export const getDuties = async (): Promise<Duty[]> => {
 };
 
 export const updateDuty = async (duty: Duty): Promise<boolean> => {
-  return await dutyRepository.updateDutyById(duty);
+  return await dutyRepository.updateDuty(duty);
 };
 
 export const deleteDuty = async (id: string): Promise<boolean> => {

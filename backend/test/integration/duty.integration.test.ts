@@ -2,15 +2,15 @@ import { createDuty, getDuties, updateDuty } from '../../src/services/duty.servi
 import pool, { closeDb } from '../../src/config/database';
 
 describe('Integration Tests: Duty Service with PostgreSQL', () => {
-  beforeAll(async () => {
+  // beforeAll(async () => {
 
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS duties (
-        id UUID PRIMARY KEY,
-        name TEXT NOT NULL
-      );
-    `);
-  });
+  //   await pool.query(`
+  //     CREATE TABLE IF NOT EXISTS duties (
+  //       id UUID PRIMARY KEY,
+  //       name TEXT NOT NULL
+  //     );
+  //   `);
+  // });
 
   beforeEach(async () => {
     // TODO - Delete this, use test db

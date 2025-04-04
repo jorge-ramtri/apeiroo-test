@@ -39,11 +39,12 @@ export const getAllDuties = async (): Promise<Duty[]> => {
 //   }
 // };
 
-export const updateDutyById = async (duty: Duty): Promise<boolean> => {
-  logger.info(`Entra en backend/src/repositories/duty.repository.updateDutyById`);
-  const query = 'UPDATE duties SET name = $1 WHERE id = $2';
-  const result = await pool.query(query, [duty.name, duty.id]);
+export const updateDuty = async (duty: Duty): Promise<boolean> => {
+  logger.info(`Entra en backend/src/repositories/duty.repository.updateDuty with duty:`);
+  const query = 'UPDATE duties SET name = $1, completed = $2 WHERE id = $3';
+  const result = await pool.query(query, [duty.name, duty.completed, duty.id]);
   if (result.rowCount === 0) {
+    logger.error("No update was made: ")
     throw new NotFoundError('Task not found');
   }
   return true;

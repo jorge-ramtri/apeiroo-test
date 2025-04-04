@@ -25,11 +25,13 @@ export const createDuty = async (name: string): Promise<Duty> => {
   return res.json();
 };
 
-export const updateDuty = async (id: string, name: string): Promise<Duty> => {
-  const res = await fetch(`${DUTIES_URL}/${id}`, {
+export const updateDuty = async (duty: Duty): Promise<Duty> => {
+  const name = duty.name;
+  const completed = duty.completed;
+  const res = await fetch(`${DUTIES_URL}/${duty.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name }),
+    body: JSON.stringify({ name, completed }),
   });
   if (!res.ok) throw new Error('Failed to update task');
   return res.json();
