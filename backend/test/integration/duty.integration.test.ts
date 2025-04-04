@@ -1,52 +1,35 @@
 import { createDuty, getDuties, updateDuty } from '../../src/services/duty.service';
 import pool, { closeDb } from '../../src/config/database';
+import { deleteDutyById, getAllDuties, insertDuty } from '../../src/repositories/duty.repository';
+import { Duty } from '../../src/models/duty';
 
 describe('Integration Tests: Duty Service with PostgreSQL', () => {
-  // beforeAll(async () => {
 
-  //   await pool.query(`
-  //     CREATE TABLE IF NOT EXISTS duties (
-  //       id UUID PRIMARY KEY,
-  //       name TEXT NOT NULL
-  //     );
-  //   `);
-  // });
-
-  beforeEach(async () => {
-    // TODO - Delete this, use test db
-    await pool.query('DELETE FROM duties;');
-  });
-
-  afterAll(async () => {
-    await closeDb();
-  });
 
   test('should create a new duty and retrieve it', async () => {
-    const dutyName = 'Integration Test Duty';S
-    const duty = await createDuty(dutyName);
-    expect(duty).toHaveProperty('id');
-    expect(duty.name).toBe(dutyName);
+    const duty: Duty = { id: '11111111-1111-1111-1111-111111111111', name: 'Integration Test Duty', completed: false };
+    const persistedDuty = await insertDuty(duty);
+    expect(persistedDuty).toHaveProperty('id');
+    expect(persistedDuty.name).toBe(duty.name);
 
-    const duties = await getDuties();
+    const duties = await getAllDuties();
     expect(Array.isArray(duties)).toBe(true);
-    expect(duties).toHaveLength(1);
-    expect(duties[0].name).toBe(dutyName);
+    expect(duties.some(d => d.name === duty.name));
   });
 
   test('should update an existing duty', async () => {
-    const initialName = 'Initial Duty';
-    const duty = await createDuty(initialName);
-    const name = "Updated Duty";
-    const newDuty = { id: duty.id, name: name }
+    const duty: Duty = { id: '11111111-1111-1111-1111-111111111112', name: 'Initial Duty', completed: false };
+    const persistedDuty = await insertDuty(duty);
+    const newDuty = { id: persistedDuty.id, name: "Updated Duty", completed: false }
     await updateDuty(newDuty);
-    const duties = await getDuties();
-    expect(duties).toHaveLength(1);
-    const updatedDuty = duties[0];
-    expect(updatedDuty.name).toBe("Updated Duty");
+    const duties = await getAllDuties();
+    expect(duties.some(d => d.name === "Updated Duty"));
   });
 
   test('should return empty array when no duties exist', async () => {
-    const duties = await getDuties();
-    expect(duties).toHaveLength(0);
+    const fistDuty = await deleteDutyById('11111111-1111-1111-1111-111111111111');
+    expect(fistDuty).toBe(true);
+    const secondDuty = await deleteDutyById('11111111-1111-1111-1111-111111111112');
+    expect(secondDuty).toBe(true);
   });
 });

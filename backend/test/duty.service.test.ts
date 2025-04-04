@@ -13,7 +13,7 @@ describe('Duty Service Unit Tests', () => {
   describe('createDuty', () => {
     it('should create a duty and return it', async () => {
       const name = 'Test Duty';
-      const fakeDuty: Duty = { id: '123', name };
+      const fakeDuty: Duty = { id: '123', name, completed: false  };
       (dutyRepository.insertDuty as jest.Mock).mockResolvedValue(fakeDuty);
 
       const result = await dutyService.createDuty(name);
@@ -31,8 +31,8 @@ describe('Duty Service Unit Tests', () => {
   describe('getDuties', () => {
     it('should return an array of duties', async () => {
       const fakeDuties: Duty[] = [
-        { id: '1', name: 'Duty 1' },
-        { id: '2', name: 'Duty 2' },
+        { id: '1', name: 'Duty 1', completed: false },
+        { id: '2', name: 'Duty 2', completed: false },
       ];
       (dutyRepository.getAllDuties as jest.Mock).mockResolvedValue(fakeDuties);
       const result = await dutyService.getDuties();
@@ -44,11 +44,10 @@ describe('Duty Service Unit Tests', () => {
     it('should update an existing duty', async () => {
       const id = '1';
       const newName = 'Updated Duty';
-      const existingDuty: Duty = { id, name: 'Old Duty' };
-      const updatedDuty: Duty = { id, name: newName };
+      const existingDuty: Duty = { id, name: 'Old Duty', completed: false };
+      const updatedDuty: Duty = { id, name: newName, completed: false };
 
-      (dutyRepository.getDutyById as jest.Mock).mockResolvedValue(existingDuty);
-      (dutyRepository.updateDutyById as jest.Mock).mockResolvedValue(updatedDuty);
+      (dutyRepository.updateDuty as jest.Mock).mockResolvedValue(updatedDuty);
 
       const result = await dutyService.updateDuty(updatedDuty);
       expect(result).toEqual(updatedDuty);
@@ -58,10 +57,9 @@ describe('Duty Service Unit Tests', () => {
   describe('deleteDuty', () => {
     it('should delete an existing duty', async () => {
       const id = '1';
-      const existingDuty: Duty = { id, name: 'Duty to delete' };
-      const deletedDuty: Duty = { id, name: 'Duty to delete' };
+      const existingDuty: Duty = { id, name: 'Duty to delete', completed: false };
+      const deletedDuty: Duty = { id, name: 'Duty to delete', completed: false };
 
-      (dutyRepository.getDutyById as jest.Mock).mockResolvedValue(existingDuty);
       (dutyRepository.deleteDutyById as jest.Mock).mockResolvedValue(deletedDuty);
 
       const result = await dutyService.deleteDuty(id);
