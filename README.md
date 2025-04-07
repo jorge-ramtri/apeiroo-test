@@ -73,3 +73,6 @@ To run backend tests (unit + integration):
 ![image](https://github.com/user-attachments/assets/05269658-3d91-40ff-8eef-214aa1cc8d70)
 
 ![image](https://github.com/user-attachments/assets/49728650-f9dc-453e-b753-dca4397dec93)
+
+![image](https://github.com/user-attachments/assets/310d6104-bb46-40c7-903b-cc77850780cc)
+
