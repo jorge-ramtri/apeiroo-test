@@ -2,6 +2,7 @@
 
 This is a fullstack to-do list application built as part of a technical exercise.  
 It allows users to create, read, and update tasks ("duties") via a web interface, with a PostgreSQL-powered backend API.
+[Design document](https://docs.google.com/document/d/1ssYkYtgYd72OzHAKOSPbM5EbvcMeEdAmzca-nm3hDes/edit?usp=sharing)
 
 ## 🚀 Getting Started
 
@@ -59,5 +60,16 @@ To run backend tests (unit + integration):
 
 * ✅ Update existing duties
 
-* ✅ Optional: Delete a duty (coming soon)
+* ✅ Optional: Delete a duty
+* ✅ Mark as completed
 
+## 📸 Frontend Screenshots
+![image](https://github.com/user-attachments/assets/998f548f-3724-41fd-b3da-f98dcc46f9ae)
+
+![image](https://github.com/user-attachments/assets/e158d020-6690-49c2-a230-d28357103176)
+
+![image](https://github.com/user-attachments/assets/c2679795-ee22-4859-9519-146ce6bdc0ae)
+
+![image](https://github.com/user-attachments/assets/05269658-3d91-40ff-8eef-214aa1cc8d70)
+
+![image](https://github.com/user-attachments/assets/49728650-f9dc-453e-b753-dca4397dec93)
