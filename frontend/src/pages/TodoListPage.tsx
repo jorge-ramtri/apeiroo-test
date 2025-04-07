@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Row, Col, Modal, message, Grid, Layout } from 'antd';
+import { Row, Col, Modal, message, Grid, Layout, Empty } from 'antd';
 
 import AppHeader from '../components/AppHeader';
 import DutyList from '../components/DutyList';
@@ -17,6 +17,7 @@ const TodoListPage = () => {
   const { id: selectedId } = useParams();
   const location = useLocation();
   const isCreating = location.pathname === '/create';
+  const isEditing = location.pathname === '/edit';
   const screens = Grid.useBreakpoint();
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const TodoListPage = () => {
   };
 
   const isWide = screens.lg ?? false;
-  const dutyToEdit = duties.find((d) => d.id === selectedId);
+  const dutyToEdit: Duty = duties.find((d) => d.id === selectedId)!;
 
   const handleEdit = (dutyId: string) => {
     navigate(`/edit/${dutyId}`);
@@ -57,8 +58,8 @@ const TodoListPage = () => {
       if (isCreating) {
         await createDuty(name);
         message.success('Created!');
-      } else if (selectedId && dutyToEdit) {
-        await updateDuty(dutyToEdit);
+      } else {
+        await updateDuty({ id: dutyToEdit.id, name, completed: false });
         message.success('Updated!');
       }
       navigate('/');

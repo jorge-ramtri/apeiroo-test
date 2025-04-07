@@ -30,7 +30,7 @@ export const updateDuty = async (duty: Duty): Promise<boolean> => {
   const query = 'UPDATE duties SET name = $1, completed = $2 WHERE id = $3';
   const result = await pool.query(query, [duty.name, duty.completed, duty.id]);
   if (result.rowCount === 0) {
-    logger.error("No update was made: ")
+    logger.error('No update was made: ');
     throw new NotFoundError('Task not found');
   }
   return true;

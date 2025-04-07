@@ -6,7 +6,7 @@ export const createDuty = async (name: string): Promise<Duty> => {
   const duty: Duty = {
     id: uuidv4(),
     name,
-    completed: false
+    completed: false,
   };
   return await dutyRepository.insertDuty(duty);
 };
