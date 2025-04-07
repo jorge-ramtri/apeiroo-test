@@ -63,3 +63,6 @@ To run backend tests (unit + integration):
 * ✅ Optional: Delete a duty
 * ✅ Mark as completed
 
+## 📸 Frontend Screenshots
+
+
